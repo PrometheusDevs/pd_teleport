@@ -28,7 +28,12 @@ description 'Easy teleports'
 version '1.0.0'
 
 client_scripts {
-    'client.lua',
+	'@es_extended/locale.lua',
+	'locales/*.lua',
 	'config.lua',
-	'locales/*.lua'
+    'client.lua'
+}
+
+dependencies {
+	'es_extended'
 }

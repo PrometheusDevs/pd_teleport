@@ -32,10 +32,14 @@ Citizen.CreateThread(function ()
             local blip = AddBlipForCoord(v.Blip.Pos.x, v.Blip.Pos.y, v.Blip.Pos.z)
 
             SetBlipSprite (blip, v.Blip.Sprite)
-            SetBlipDisplay(blip, v.Blip.Display)
             SetBlipScale  (blip, v.Blip.Scale)
             SetBlipColour (blip, v.Blip.Color)
+            SetBlipDisplay(blip, v.Blip.Display)
             SetBlipAsShortRange(blip, v.Blip.AsShortRange)
+
+            BeginTextCommandSetBlipName("STRING")
+            AddTextComponentString(v.Blip.Name)
+            EndTextCommandSetBlipName(blip)
         end
     end
 
@@ -49,14 +53,14 @@ function doJob()
         playerLoc = GetEntityCoords(player)
 
         for k,value in pairs(Config.Teleports) do
-            if value.VisibilityDistance > 0 then
-                if CheckPos(playerLoc.x, playerLoc.y, playerLoc.z, value.Marker.Pos.x, value.Marker.Pos.y, value.Marker.Pos.z, value.VisibilityDistance) then
+            if value.Marker.VisibilityDistance > 0 then
+                if CheckPos(playerLoc.x, playerLoc.y, playerLoc.z, value.Marker.Pos.x, value.Marker.Pos.y, value.Marker.Pos.z, value.Marker.VisibilityDistance) then
                     DrawMarker(value.Marker.Type, value.Marker.Pos.x, value.Marker.Pos.y, value.Marker.Pos.z, 0,0,0, 0,0,0, 0.6,0.6,0.6, 
                         value.Marker.Color.r, value.Marker.Color.g, value.Marker.Color.b, value.Marker.Color.a, 0, 0, 0, 0)
                 end
             end
             
-            if CheckPos(playerLoc.x, playerLoc.y, playerLoc.z, value.Marker.Pos.x, value.Marker.Pos.y, value.Marker.Pos.z, value.EnteringDistance) then
+            if CheckPos(playerLoc.x, playerLoc.y, playerLoc.z, value.Marker.Pos.x, value.Marker.Pos.y, value.Marker.Pos.z, value.Marker.EnteringDistance) then
                 showPerssKeyAlert(_U('PressKeyNotification'))
                 if IsControlJustReleased(1, Config.key_to_teleport) then
                     if IsPedInAnyVehicle(player, true) then
